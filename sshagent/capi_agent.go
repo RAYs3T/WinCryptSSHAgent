@@ -7,11 +7,14 @@ import (
 	"fmt"
 	"os"
 	"sync"
+	"time"
 
 	"github.com/buptczq/WinCryptSSHAgent/capi"
 	"github.com/buptczq/WinCryptSSHAgent/utils"
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/crypto/ssh/agent"
+
+	"github.com/electricbubble/go-toast"
 )
 
 type sshKey struct {
@@ -111,11 +114,31 @@ func (s *CAPIAgent) Sign(key ssh.PublicKey, data []byte) (*ssh.Signature, error)
 }
 
 func (s *CAPIAgent) signed(comment string) {
-	utils.Notify(
-		"info",
-		"Success ✅",
-		"For Certificate <"+comment+">",
-	)
+	// siging complete - checking for touchRequired is no loger required
+	touchRequired = false
+
+	/**
+	_ = toast.Push("Signed.\r\nFor Certificate<"+comment+">",
+		toast.WithTitle("✅ Successfully signed!"),
+		toast.WithAppID("WinCrypt SSH Agent"),
+		toast.WithAudio(toast.Silent),
+		toast.WithShortDuration(),
+	)*/
+}
+
+var touchRequired = false
+
+func notifyUserWhenInputRequired(s string) {
+	time.Sleep(500 * time.Millisecond)
+	if touchRequired {
+		_ = toast.Push("Please touch your SecurityKey to confirm.\r\n<"+s+">",
+			toast.WithTitle("🔏 Siging requested"),
+			toast.WithAppID("WinCrypt SSH Agent"),
+			toast.WithAudio(toast.SMS),
+			toast.WithShortDuration(),
+		)
+	}
+
 }
 
 func (s *CAPIAgent) SignWithFlags(key ssh.PublicKey, data []byte, flags agent.SignatureFlags) (*ssh.Signature, error) {
@@ -139,11 +162,27 @@ func (s *CAPIAgent) SignWithFlags(key ssh.PublicKey, data []byte, flags agent.Si
 	wanted := key.Marshal()
 	for _, k := range s.keys {
 		if bytes.Equal(k.signer.PublicKey().Marshal(), wanted) {
-			utils.Notify("info", "Touch YubiKey ☝️", "For Certificate <"+k.comment+">")
+			//utils.Notify("info", "Touch YubiKey ☝️", "For Certificate <"+k.comment+">")
+
 			if flags == 0 {
+				// Start goroutine which checks delayed if the signing call needs longer.
+				// if it does we assume this is due to required user input
+				go notifyUserWhenInputRequired(k.comment)
+				touchRequired = true
+
 				sign, err := k.signer.Sign(rand.Reader, data)
+				// After sign - reset flag so the goroutine does not display anyting to the user
+				touchRequired = false
 				if err == nil {
 					s.signed(k.comment)
+				} else {
+					_ = toast.Push("This is most likely due to a PIN/touch timeout.\r\n\r\n"+err.Error(),
+						toast.WithTitle("❌ Signing failed!"),
+						toast.WithAppID("WinCrypt SSH Agent"),
+						toast.WithAudio(toast.Default),
+						toast.WithShortDuration(),
+						toast.WithProtocolAction("test", "test"),
+					)
 				}
 				return sign, err
 			} else {

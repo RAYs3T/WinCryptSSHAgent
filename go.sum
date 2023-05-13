@@ -8,6 +8,8 @@ github.com/buptczq/go.notify v0.0.0-20210108030838-37adc71f67d9 h1:wncOJqEjYJcrT
 github.com/buptczq/go.notify v0.0.0-20210108030838-37adc71f67d9/go.mod h1:lJopi7AD2HgknzoYY3fzqs5hodbG2unhdpzGs8AzjI0=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/electricbubble/go-toast v0.3.0 h1:e/PtFkpYNdLANI/utTXzoYQuMYG/N8oHT0Rwal4z/sI=
+github.com/electricbubble/go-toast v0.3.0/go.mod h1:6k4ufXmV/AS32EugdLeIXa+2jv6oYbWzv2+UZhB49FI=
 github.com/fullsailor/pkcs7 v0.0.0-20190404230743-d7302db945fa h1:RDBNVkRviHZtvDvId8XSGPu3rmpmSe+wKRcEWNgsfWU=
 github.com/fullsailor/pkcs7 v0.0.0-20190404230743-d7302db945fa/go.mod h1:KnogPXtdwXqoenmZCw6S+25EAm2MkxbG0deNDu4cbSA=
 github.com/go-ole/go-ole v1.2.4 h1:nNBDSCOigTSiarFpYE9J/KtEA1IOW4CNeqT9TQDqCxI=

@@ -5,6 +5,7 @@ go 1.14
 require (
 	github.com/Microsoft/go-winio v0.4.16
 	github.com/bi-zone/wmi v1.1.4
+	github.com/electricbubble/go-toast v0.3.0 // indirect
 	github.com/fullsailor/pkcs7 v0.0.0-20190404230743-d7302db945fa
 	github.com/hattya/go.notify v0.0.0-20200507123844-18670158b53e
 	github.com/linuxkit/virtsock v0.0.0-20180830132707-8e79449dea07
