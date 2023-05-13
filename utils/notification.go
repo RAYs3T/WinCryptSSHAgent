@@ -1,9 +1,10 @@
 package utils
 
 import (
-	"github.com/hattya/go.notify"
 	"syscall"
 	"unsafe"
+
+	notify "github.com/hattya/go.notify"
 )
 
 var (
@@ -64,11 +65,11 @@ func MessageBox(title, text string, style uintptr) int {
 	return int(ret)
 }
 
-func Notify(title, message string) {
+func Notify(notifierType string, title, message string) {
 	if notifier == nil {
 		return
 	}
-	notifier.Notify("info", title, message)
+	notifier.Notify(notifierType, title, message)
 }
 
 func RegisterNotifier(n notify.Notifier) {

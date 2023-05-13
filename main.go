@@ -10,9 +10,10 @@ import (
 	"path/filepath"
 	"sync"
 	"time"
-	"github.com/buptczq/WinCryptSSHAgent/capi"
+
 	"github.com/Microsoft/go-winio"
 	"github.com/buptczq/WinCryptSSHAgent/app"
+	"github.com/buptczq/WinCryptSSHAgent/capi"
 	"github.com/buptczq/WinCryptSSHAgent/sshagent"
 	"github.com/buptczq/WinCryptSSHAgent/utils"
 	notify "github.com/hattya/go.notify"

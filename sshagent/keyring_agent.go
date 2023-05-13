@@ -3,6 +3,7 @@ package sshagent
 import (
 	"bytes"
 	"encoding/base64"
+
 	"github.com/buptczq/WinCryptSSHAgent/utils"
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/crypto/ssh/agent"
@@ -54,6 +55,7 @@ func (s *KeyRingAgent) Add(key agent.AddedKey) error {
 	err := s.ag.Add(key)
 	if err == nil {
 		defer utils.Notify(
+			"info",
 			"Key Added",
 			"Key <"+key.Comment+"> has been added to keyring",
 		)
@@ -66,6 +68,7 @@ func (s *KeyRingAgent) Remove(key ssh.PublicKey) error {
 	err := s.ag.Remove(key)
 	if err == nil {
 		defer utils.Notify(
+			"info",
 			"Key Removed",
 			"Key <"+comment+"> has been removed from keyring",
 		)
@@ -77,6 +80,7 @@ func (s *KeyRingAgent) RemoveAll() error {
 	err := s.ag.RemoveAll()
 	if err == nil {
 		defer utils.Notify(
+			"info",
 			"Key Removed",
 			"All Keys have been removed from keyring",
 		)
@@ -98,6 +102,7 @@ func (s *KeyRingAgent) Signers() ([]ssh.Signer, error) {
 
 func (s *KeyRingAgent) signed(comment string) {
 	utils.Notify(
+		"info",
 		"Authenticated (Keyring)",
 		"Authentication Success by Key <"+comment+">",
 	)
