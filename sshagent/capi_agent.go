@@ -129,7 +129,7 @@ func (s *CAPIAgent) signed(comment string) {
 var touchRequired = false
 
 func notifyUserWhenInputRequired(s string) {
-	time.Sleep(500 * time.Millisecond)
+	time.Sleep(3000 * time.Millisecond)
 	if touchRequired {
 		_ = toast.Push("Please touch your SecurityKey to confirm.\r\n<"+s+">",
 			toast.WithTitle("🔏 Siging requested"),
