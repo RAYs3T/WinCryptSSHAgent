@@ -59,6 +59,7 @@ func (s *KeyRingAgent) Add(key agent.AddedKey) error {
 			"Key Added",
 			"Key <"+key.Comment+"> has been added to keyring",
 			toast.Silent,
+			utils.ICON_KEY_PLUS,
 		)
 	}
 	return err
@@ -72,6 +73,7 @@ func (s *KeyRingAgent) Remove(key ssh.PublicKey) error {
 			"Key Removed",
 			"Key <"+comment+"> has been removed from keyring",
 			toast.Silent,
+			utils.ICON_KEY_MINUS,
 		)
 	}
 	return err
@@ -84,6 +86,7 @@ func (s *KeyRingAgent) RemoveAll() error {
 			"Key Removed",
 			"All Keys have been removed from keyring",
 			toast.Silent,
+			utils.ICON_KEY_REMOVE,
 		)
 	}
 	return err
@@ -106,6 +109,7 @@ func (s *KeyRingAgent) signed(comment string) {
 		"Authenticated (Keyring)",
 		"Authentication Success by Key <"+comment+">",
 		toast.Silent,
+		utils.ICON_CHECK,
 	)
 }
 

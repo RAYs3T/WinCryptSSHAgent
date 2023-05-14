@@ -5,6 +5,8 @@ import (
 	"unsafe"
 
 	"github.com/electricbubble/go-toast"
+
+	_ "embed"
 )
 
 var (
@@ -64,11 +66,30 @@ func MessageBox(title, text string, style uintptr) int {
 	return int(ret)
 }
 
-func Notify(title string, message string, sound toast.Audio) {
+//go:embed icons/fingerprint.png
+var ICON_FINGERPRINT []byte
+
+//go:embed icons/alert-circle.png
+var ICON_ALERT []byte
+
+//go:embed icons/check-bold.png
+var ICON_CHECK []byte
+
+//go:embed icons/key-minus.png
+var ICON_KEY_MINUS []byte
+
+//go:embed icons/key-plus.png
+var ICON_KEY_PLUS []byte
+
+//go:embed icons/key-remove.png
+var ICON_KEY_REMOVE []byte
+
+func Notify(title string, message string, sound toast.Audio, icon []byte) {
 	_ = toast.Push(message,
 		toast.WithTitle(title),
 		toast.WithAppID("WinCrypt SSH Agent"),
 		toast.WithAudio(sound),
 		toast.WithShortDuration(),
+		toast.WithIconRaw(icon),
 	)
 }
