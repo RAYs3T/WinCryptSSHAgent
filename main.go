@@ -215,6 +215,6 @@ func initSystray(hv bool) (notify.Notifier, error) {
 	n.Register("info", notification.IconInfo, map[string]interface{}{
 		"windows:sound": false,
 	})
-	utils.RegisterNotifier(n)
+
 	return n, nil
 }

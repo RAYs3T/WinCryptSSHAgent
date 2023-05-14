@@ -4,13 +4,12 @@ import (
 	"syscall"
 	"unsafe"
 
-	notify "github.com/hattya/go.notify"
+	"github.com/electricbubble/go-toast"
 )
 
 var (
 	moduser32      = syscall.NewLazyDLL("user32.dll")
 	procMessageBox = moduser32.NewProc("MessageBoxW")
-	notifier       notify.Notifier
 )
 
 const (
@@ -65,13 +64,11 @@ func MessageBox(title, text string, style uintptr) int {
 	return int(ret)
 }
 
-func Notify(notifierType string, title, message string) {
-	if notifier == nil {
-		return
-	}
-	notifier.Notify(notifierType, title, message)
-}
-
-func RegisterNotifier(n notify.Notifier) {
-	notifier = n
+func Notify(title string, message string, sound toast.Audio) {
+	_ = toast.Push(message,
+		toast.WithTitle(title),
+		toast.WithAppID("WinCrypt SSH Agent"),
+		toast.WithAudio(sound),
+		toast.WithShortDuration(),
+	)
 }
