@@ -131,14 +131,8 @@ var touchRequired = false
 func notifyUserWhenInputRequired(s string) {
 	time.Sleep(3000 * time.Millisecond)
 	if touchRequired {
-		_ = toast.Push("Please touch your SecurityKey to confirm.\r\n<"+s+">",
-			toast.WithTitle("🔏 Siging requested"),
-			toast.WithAppID("WinCrypt SSH Agent"),
-			toast.WithAudio(toast.SMS),
-			toast.WithShortDuration(),
-		)
+		utils.Notify("🔏 Signing requested", "Please touch your SecurityKey to confirm.\r\n<"+s+">", toast.Silent)
 	}
-
 }
 
 func (s *CAPIAgent) SignWithFlags(key ssh.PublicKey, data []byte, flags agent.SignatureFlags) (*ssh.Signature, error) {
@@ -176,13 +170,7 @@ func (s *CAPIAgent) SignWithFlags(key ssh.PublicKey, data []byte, flags agent.Si
 				if err == nil {
 					s.signed(k.comment)
 				} else {
-					_ = toast.Push("This is most likely due to a PIN/touch timeout.\r\n\r\n"+err.Error(),
-						toast.WithTitle("❌ Signing failed!"),
-						toast.WithAppID("WinCrypt SSH Agent"),
-						toast.WithAudio(toast.Default),
-						toast.WithShortDuration(),
-						toast.WithProtocolAction("test", "test"),
-					)
+					utils.Notify("❌ Signing failed!", "This is most likely due to a PIN/touch timeout.\r\n\r\n"+err.Error(), toast.Silent)
 				}
 				return sign, err
 			} else {
